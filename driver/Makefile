@@ -5,7 +5,7 @@
 # ============================================================================
 
 # Compiler settings
-CC = gcc
+CC = clang
 CFLAGS = -Wall -Wextra -std=c99 -O2 -g
 LDFLAGS = -lpthread
 
@@ -194,10 +194,18 @@ logs-bridge:
 		echo "No log file found"; \
 	fi
 
-# Run test suite
+# Run test suite with optional DEBUG flag
 test: $(TEST_BIN)
 	@echo "Running I2C driver test suite..."
-	$(TEST_BIN)
+	@if [ "$(DEBUG)" = "1" ]; then \
+		echo "Rebuilding with debug symbols..."; \
+		$(MAKE) clean; \
+		$(MAKE) CFLAGS="-Wall -Wextra -std=c99 -g" all; \
+		echo "Running test suite in lldb..."; \
+		lldb -- $(TEST_BIN); \
+	else \
+		$(TEST_BIN); \
+	fi
 
 # Run simple test
 simple: $(SIMPLE_BIN)
