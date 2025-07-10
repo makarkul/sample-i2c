@@ -1,0 +1,20 @@
+# Simulation artifacts
+sim/
+*.vcd
+*.out
+*.log
+
+# Editor temporary files
+*~
+*.swp
+*.swo
+.DS_Store
+
+# Compilation artifacts
+*.o
+*.exe
+a.out
+
+# IDE files
+.vscode/
+.idea/
